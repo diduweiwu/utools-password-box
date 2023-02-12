@@ -19,7 +19,7 @@ export default function () {
 
     // 进入列表的时候,初始化进行筛选
     utools.onPluginEnter(({type, payload}) => {
-        utools.setSubInput(({text}) => keyWord.value = text, "回车搜索密码项名称,双击复制密码，鼠标右击收藏～");
+        utools.setSubInput(({text}) => keyWord.value = text, "回车搜索,单击序号填充密码,双击复制密码，鼠标右击收藏～");
     })
     addEventListener('keydown', (event) => {
         // 回车的时候，进行搜索

@@ -2,21 +2,21 @@
   <n-list-item @dblclick="copyPassword" :key="passwordItem.id" @click.right="starPassword">
     <template #prefix>
       <n-space align="center" justify="start" style="width: 240px">
-        <div style="width: 50px">
-          <n-tag round>{{ indexNum + 1 }}</n-tag>
+        <div style="width: 50px;" @click="fillPasswordToInput">
+          <n-tag round style="cursor:pointer;">{{ indexNum + 1 }}</n-tag>
         </div>
         <n-ellipsis style="max-width: 200px">{{ passwordItem['passwordName'] }}</n-ellipsis>
       </n-space>
     </template>
     <n-space justify="space-between" align="center" class="password-item">
-      <n-text v-if="isShowPlainPassword">{{ passwordItem['passwordContent'] }}</n-text>
+      <n-ellipsis style="max-width: 280px" v-if="isShowPlainPassword">{{ passwordItem['passwordContent'] }}</n-ellipsis>
       <n-text v-else>
         <n-icon :component="LockOutlined"/>
         **********
       </n-text>
     </n-space>
     <template #suffix>
-      <n-space style="width: 200px;" justify="center" align="center">
+      <n-space style="width: 175px;" justify="center" align="center">
         <n-button :focusable="false" size="small" ghost @click="isShowPlainPassword=!isShowPlainPassword">
           <n-icon v-if="isShowPlainPassword" :component="RemoveRedEyeOutlined"/>
           <n-icon v-else :component="RemoveRedEyeSharp"/>
@@ -40,7 +40,7 @@
       </n-space>
     </template>
   </n-list-item>
-  <PasswordItemEdit ref="passwordItemEdit"/>
+  <PasswordItemEdit ref="passwordItemEdit" placement="left"/>
 </template>
 
 <script>
@@ -78,6 +78,11 @@ export default {
       }
     }
 
+    // 直接填充密码到输入框
+    const fillPasswordToInput = () => {
+      utools.hideMainWindowTypeString(passwordItem.value.passwordContent)
+    }
+
     // 置顶收藏
     const starPassword = () => {
       passwordItem.value['isStar'] = !!passwordItem.value['isStar'] ? 0 : 1
@@ -94,6 +99,7 @@ export default {
       showDeleteConfirm,
       deletePasswordItem: () => deletePasswordItem(passwordItem.value),
       copyPassword,
+      fillPasswordToInput,
       starPassword,
       LockOutlined,
       RemoveRedEyeOutlined,
