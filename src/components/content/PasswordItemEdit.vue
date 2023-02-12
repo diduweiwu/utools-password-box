@@ -81,9 +81,7 @@ export default {
       onClose: () => emitter.emit('onPasswordUpdate'),
       onSave,
       show: (passwordItem) => {
-        if (passwordItem) {
-          Object.assign(model.value, passwordItem)
-        }
+        model.value = passwordItem || {}
         isShow.value = true
       },
       close,
