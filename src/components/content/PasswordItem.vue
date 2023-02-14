@@ -5,7 +5,13 @@
         <div style="width: 50px;" @click="fillPasswordToInput">
           <n-tag round style="cursor:pointer;">{{ indexNum + 1 }}</n-tag>
         </div>
-        <n-ellipsis style="max-width: 200px">{{ passwordItem['passwordName'] }}</n-ellipsis>
+        <div style="max-width: 175px" @click="()=>$refs.passwordItemView.show(passwordItem)">
+          <n-text type="info">
+            <n-ellipsis>
+              {{ passwordItem['passwordName'] }}
+            </n-ellipsis>
+          </n-text>
+        </div>
       </n-space>
     </template>
     <n-space justify="space-between" align="center" class="password-item">
@@ -41,6 +47,7 @@
     </template>
   </n-list-item>
   <PasswordItemEdit ref="passwordItemEdit" placement="left"/>
+  <PasswordItemView ref="passwordItemView" placement="bottom"/>
 </template>
 
 <script>
@@ -57,10 +64,11 @@ import {
 import UsePasswordStorage from "./usePasswordStorage.js";
 import {useMessage} from "naive-ui";
 import PasswordItemEdit from "./PasswordItemEdit.vue";
+import PasswordItemView from "./PasswordItemView.vue";
 
 export default {
   name: "PasswordItem",
-  components: {PasswordItemEdit},
+  components: {PasswordItemView, PasswordItemEdit},
   props: {
     indexNum: {type: Number, default: 1},
     passwordItem: {type: Object, default: null}

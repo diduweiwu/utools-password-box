@@ -4,20 +4,28 @@
       <template #header>
         密码编辑
       </template>
-      <n-form ref="formRef" :model='model' :rules="rules">
+      <n-form ref="formRef" :model='model' :rules="rules" label-placement="left" label-width="80" require-mark-placement="left">
         <n-form-item label="名称" path="passwordName">
           <n-input placeholder="请输入密码项名称" maxlength="100" v-model:value="model.passwordName" show-count/>
+        </n-form-item>
+        <n-form-item label="账号" path="passwordUserName">
+          <n-input :resizable="false" maxlength="100" placeholder="请输入账号名称，纯key类型，该项可以留空" show-count
+                   v-model:value="model.passwordUserName"/>
         </n-form-item>
         <n-form-item label="密码" path="passwordContent">
           <n-input type="password" :resizable="false" maxlength="2048" placeholder="请输入密码内容" show-count
                    show-password-on="click"
                    v-model:value="model.passwordContent"/>
         </n-form-item>
-        <n-form-item>
+        <n-form-item label="加入收藏" label-placement="left">
           <n-radio-group v-model:value="model.isStar" name="isStar" :default-value="0">
             <n-radio :value="0">否</n-radio>
             <n-radio :value="1">是</n-radio>
           </n-radio-group>
+        </n-form-item>
+        <n-form-item label="备注说明">
+          <n-input type="textarea" :rows="3" placeholder="该密码项的相关描述，比如密码所属的网站，APP" maxlength="5000"
+                   show-count v-model:value="model.description"/>
         </n-form-item>
       </n-form>
       <template #footer>
