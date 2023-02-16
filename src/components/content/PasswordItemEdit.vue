@@ -4,7 +4,8 @@
       <template #header>
         密码编辑
       </template>
-      <n-form ref="formRef" :model='model' :rules="rules" label-placement="left" label-width="80" require-mark-placement="left">
+      <n-form ref="formRef" :model='model' :rules="rules" label-placement="left" label-width="80"
+              require-mark-placement="left">
         <n-form-item label="名称" path="passwordName">
           <n-input placeholder="请输入密码项名称" maxlength="100" v-model:value="model.passwordName" show-count/>
         </n-form-item>
@@ -52,6 +53,7 @@ export default {
     const model = ref({
       passwordName: '',
       passwordContent: '',
+      isStar: 0,
     })
 
     const rules = ref({

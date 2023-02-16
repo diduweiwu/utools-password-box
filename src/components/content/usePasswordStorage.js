@@ -5,7 +5,17 @@ import {configUnlockPasswordKey} from "../config/usePasswordBoxConfig.js";
 const passwordItemMapKey = 'passwordItemMap'
 
 function fetchPasswordItemMap() {
-    return utools.dbStorage.getItem(passwordItemMapKey) || {}
+    const config = fetchConfig()
+    const isLocked = !!config[configUnlockPasswordKey]
+
+    const passwordItemMap = utools.dbStorage.getItem(passwordItemMapKey) || {}
+    if (isLocked) {
+        for (let [_, value] of Object.entries(passwordItemMap)) {
+            value['passwordContent'] = aesDecrypt(value['passwordContent'])
+        }
+    }
+
+    return passwordItemMap
 }
 
 const passwordListSort = (v1, v2) => {
@@ -43,11 +53,8 @@ function encryptPassword(passwordItem, isLocked = false) {
 }
 
 export function fetchPasswordItemList() {
-    const config = fetchConfig()
-    const isLocked = !!config[configUnlockPasswordKey]
-    // 先按收藏的排序在最前面，然后按照创建日期倒排序
     // 密码项id/名称/内容 必须都存在才会展示
-    return Object.values(fetchPasswordItemMap()).map(passwordItem => decryptPassword(passwordItem, isLocked)).sort(passwordListSort).filter(validFilter)
+    return Object.values(fetchPasswordItemMap()).sort(passwordListSort).filter(validFilter)
 }
 
 function updatePasswordItemMap(passwordItemMap = {}) {
