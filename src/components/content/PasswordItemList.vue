@@ -17,10 +17,11 @@ import {onMounted} from "vue";
 import {emitter} from "/src/js/eventBus.js";
 import {passwordUpdateEvent} from "/src/components/content/usePasswordStorage.js";
 import PasswordItemEdit from "./PasswordItemEdit.vue";
+import LockPage from "../lock/LockPage.vue";
 
 export default {
   name: "ContentSection",
-  components: {PasswordItemEdit, PasswordItem},
+  components: {LockPage, PasswordItemEdit, PasswordItem},
   setup() {
     const {passwordItemList, reloadPasswordItemList} = UsePasswordItemList()
 
