@@ -25,6 +25,7 @@ import {
     NRadioGroup,
     NResult,
     NSpace,
+    NPopover,
     NTag,
     NText,
 } from 'naive-ui'
@@ -48,6 +49,7 @@ const naive = create({
         NRadioGroup,
         NResult,
         NSpace,
+        NPopover,
         NList,
         NListItem,
         NTag,

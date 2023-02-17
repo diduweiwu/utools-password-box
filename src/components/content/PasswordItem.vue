@@ -1,48 +1,96 @@
 <template>
-  <n-list-item @dblclick="copyPassword" :key="passwordItem.id" @click.right="starPassword">
+  <n-list-item :key="passwordItem.id" @click.right="starPassword">
     <template #prefix>
       <n-space align="center" justify="start" style="width: 240px">
-        <div style="width: 50px;" @click="fillPasswordToInput">
-          <n-tag round style="cursor:pointer;">{{ indexNum + 1 }}</n-tag>
-        </div>
-        <div style="max-width: 175px" @click="()=>$refs.passwordItemView.show(passwordItem)">
-          <n-text type="info">
-            <n-ellipsis>
-              {{ passwordItem['passwordName'] }}
-            </n-ellipsis>
-          </n-text>
-        </div>
+        <n-popover placement="right">
+          双击直接填充密码
+          <template #trigger>
+            <div style="width: 50px;" @dblclick="fillPasswordToInput">
+              <n-tag round style="cursor:pointer;">{{ indexNum + 1 }}</n-tag>
+            </div>
+          </template>
+        </n-popover>
+        <n-popover>
+          双击直接复制账号
+          <template #trigger>
+            <div style="max-width: 175px;cursor:pointer;" @dblclick="()=>copyContent(passwordItem['passwordUserName'])">
+              <n-text type="info">
+                <n-ellipsis>
+                  {{ passwordItem['passwordName'] }}
+                </n-ellipsis>
+              </n-text>
+            </div>
+          </template>
+        </n-popover>
       </n-space>
     </template>
-    <n-space justify="space-between" align="center" class="password-item">
-      <n-ellipsis style="max-width: 280px" v-if="isShowPlainPassword">{{ passwordItem['passwordContent'] }}</n-ellipsis>
-      <n-text v-else>
-        <n-icon :component="LockOutlined"/>
-        **********
-      </n-text>
+    <n-space justify="space-between" align="center" class="password-item"
+             @dblclick="()=>copyContent(passwordItem['passwordContent'])">
+      <n-popover>
+        双击直接复制密码
+        <template #trigger>
+          <n-ellipsis style="max-width: 280px" v-if="isShowPlainPassword">
+            {{ passwordItem['passwordContent'] }}
+          </n-ellipsis>
+          <n-text v-else>
+            <n-icon :component="LockOutlined"/>
+            **********
+          </n-text>
+        </template>
+      </n-popover>
+
     </n-space>
     <template #suffix>
       <n-space style="width: 175px;" justify="center" align="center">
-        <n-button :focusable="false" size="small" ghost @click="isShowPlainPassword=!isShowPlainPassword">
-          <n-icon v-if="isShowPlainPassword" :component="RemoveRedEyeOutlined"/>
-          <n-icon v-else :component="RemoveRedEyeSharp"/>
-        </n-button>
-        <n-button :focusable="false" size="small" ghost @click="starPassword">
-          <n-icon v-if="passwordItem.isStar" :component="StarOutlined"/>
-          <n-icon v-else :component="StarOutlineTwotone"/>
-        </n-button>
-        <n-button :focusable="false" size="small" ghost @click="()=>$refs.passwordItemEdit.show(passwordItem)">
-          <n-icon :component="EditCalendarFilled"/>
-        </n-button>
-        <n-popconfirm v-model:show="showDeleteConfirm" positive-text="确定" negative-text="算了"
-                      :on-positive-click="deletePasswordItem">
+        <n-popover>
+          显示密码
           <template #trigger>
-            <n-button :focusable="false" size="small" ghost type="error" @click="showDeleteConfirm=true">
-              <n-icon :component="DeleteOutlineTwotone"/>
+            <n-button :focusable="false" size="tiny" ghost @click="isShowPlainPassword=!isShowPlainPassword">
+              <n-icon v-if="isShowPlainPassword" :component="RemoveRedEyeOutlined"/>
+              <n-icon v-else :component="RemoveRedEyeSharp"/>
             </n-button>
           </template>
-          确定删除吗？
-        </n-popconfirm>
+        </n-popover>
+        <n-popover>
+          查看详情
+          <template #trigger>
+            <n-button :focusable="false" size="tiny" ghost @click="()=>$refs.passwordItemView.show(passwordItem)">
+              <n-icon :component="DocumentScannerOutlined"/>
+            </n-button>
+          </template>
+        </n-popover>
+
+        <n-popover>
+          {{ passwordItem.isStar ? '取消收藏' : '加入收藏' }}
+          <template #trigger>
+            <n-button :focusable="false" size="tiny" ghost @click="starPassword">
+              <n-icon v-if="passwordItem.isStar" :component="StarOutlined"/>
+              <n-icon v-else :component="StarOutlineTwotone"/>
+            </n-button>
+          </template>
+        </n-popover>
+        <n-popover>
+          编辑详情
+          <template #trigger>
+            <n-button :focusable="false" size="tiny" ghost @click="()=>$refs.passwordItemEdit.show(passwordItem)">
+              <n-icon :component="EditCalendarFilled"/>
+            </n-button>
+          </template>
+        </n-popover>
+        <n-popover>
+          删除
+          <template #trigger>
+            <n-popconfirm v-model:show="showDeleteConfirm" positive-text="确定" negative-text="算了"
+                          :on-positive-click="deletePasswordItem">
+              <template #trigger>
+                <n-button :focusable="false" size="tiny" ghost type="error" @click="showDeleteConfirm=true">
+                  <n-icon :component="DeleteOutlineTwotone"/>
+                </n-button>
+              </template>
+              确定删除吗？
+            </n-popconfirm>
+          </template>
+        </n-popover>
       </n-space>
     </template>
   </n-list-item>
@@ -54,6 +102,7 @@
 import {ref, toRefs} from "vue";
 import {
   DeleteOutlineTwotone,
+  DocumentScannerOutlined,
   EditCalendarFilled,
   LockOutlined,
   RemoveRedEyeOutlined,
@@ -65,6 +114,7 @@ import UsePasswordStorage from "./usePasswordStorage.js";
 import {useMessage} from "naive-ui";
 import PasswordItemEdit from "./PasswordItemEdit.vue";
 import PasswordItemView from "./PasswordItemView.vue";
+import useCopy from "../../js/useCopy.js";
 
 export default {
   name: "PasswordItem",
@@ -77,14 +127,6 @@ export default {
     const {passwordItem} = toRefs(props)
     const {deletePasswordItem, updatePasswordItem} = UsePasswordStorage()
     const {success} = useMessage()
-    // 复制
-    const copyPassword = () => {
-      const copyResult = utools.copyText(passwordItem.value.passwordContent)
-      success(copyResult ? '复制成功,去粘贴吧~' : '复制失败:(,请重试或者联系作者')
-      if (copyResult) {
-        utools.hideMainWindow()
-      }
-    }
 
     // 直接填充密码到输入框
     const fillPasswordToInput = () => {
@@ -102,11 +144,12 @@ export default {
     const isShowPlainPassword = ref(false)
     const showDeleteConfirm = ref(false)
 
+    const {copyContent} = useCopy()
+
     return {
       isShowPlainPassword,
       showDeleteConfirm,
       deletePasswordItem: () => deletePasswordItem(passwordItem.value),
-      copyPassword,
       fillPasswordToInput,
       starPassword,
       LockOutlined,
@@ -117,6 +160,8 @@ export default {
       DeleteOutlineTwotone,
       EditCalendarFilled,
       PasswordItemEdit,
+      DocumentScannerOutlined,
+      copyContent,
     }
   }
 }

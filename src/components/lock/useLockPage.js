@@ -26,13 +26,13 @@ export default function () {
 
     const initIsLocked = () => {
         const {configUnlockPassword} = fetchConfig()
+        unlockPassword.value = ''
         isLocked.value = !!configUnlockPassword
     }
 
     return {
         isLocked,
         initIsLocked,
-        show: () => isLocked.value = true,
         unlock,
         unlockPassword,
     }

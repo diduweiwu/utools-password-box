@@ -13,3 +13,11 @@ window.decrypt = (cipherText, key, outputEncoding = "utf8") => {
     const cipher = crypto.createDecipheriv("aes-128-ecb", key, null);
     return Buffer.concat([cipher.update(Buffer.from(cipherText, "base64")), cipher.final()]).toString(outputEncoding);
 }
+
+window.copyContent = (content) => {
+    const copyResult = utools.copyText(content)
+    success(copyResult ? '复制成功,去粘贴吧~' : '复制失败:(,请重试或者联系作者')
+    if (copyResult) {
+        utools.hideMainWindow()
+    }
+}

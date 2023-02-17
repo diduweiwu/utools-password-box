@@ -1,9 +1,10 @@
 <template>
   <n-drawer v-model:show="isShow" placement="left" width="90%">
-    <n-drawer-content>
+    <n-drawer-content title="全局配置">
       <n-form>
-        <n-form-item label="锁定密码(清空即可去除锁定)">
-          <n-input placeholder="请输入全局锁定密码" clearable maxlength="50" show-count v-model:value="configUnlockPassword"></n-input>
+        <n-form-item label="锁定密码(清空并保存成功即可去除锁定)">
+          <n-input placeholder="请输入全局锁定密码" clearable maxlength="50" show-count
+                   v-model:value="configUnlockPassword"></n-input>
         </n-form-item>
       </n-form>
       <template #footer>

@@ -20,6 +20,11 @@
             {{ isShowPlainPassword ? passwordItem['passwordContent'] : '**********' }}
           </n-text>
         </n-descriptions-item>
+        <n-descriptions-item label="所属应用">
+          <n-text>
+            {{ passwordItem['application'] }}
+          </n-text>
+        </n-descriptions-item>
         <n-descriptions-item label="描述">
           <n-text>
             {{ passwordItem['description'] }}
@@ -29,8 +34,10 @@
 
       <template #footer>
         <n-space>
+          <n-button @click="()=>copyContent(passwordItem.passwordUserName)" :focusable="false">复制账号</n-button>
+          <n-button @click="()=>copyContent(passwordItem.passwordContent)" :focusable="false">复制密码</n-button>
           <n-button @click="isShowPlainPassword=!isShowPlainPassword" :focusable="false" type="primary">
-            {{ isShowPlainPassword ? '隐藏' : '显示' }}
+            {{ isShowPlainPassword ? '隐藏' : '显示' }}密码
           </n-button>
           <n-button @click="close" :focusable="false">关闭</n-button>
         </n-space>
@@ -42,6 +49,7 @@
 <script>
 import {ref} from "vue";
 import {LockOutlined} from "@vicons/material";
+import useCopy from "../../js/useCopy.js";
 
 export default {
   name: "PasswordItemView",
@@ -52,6 +60,7 @@ export default {
     const passwordItem = ref({})
 
     const close = () => isShow.value = false
+    const {copyContent} = useCopy()
 
     return {
       isShow,
@@ -60,6 +69,7 @@ export default {
         passwordItem.value = initPasswordItem || {}
         isShow.value = true
       },
+      copyContent,
       close,
       passwordItem,
       LockOutlined,

@@ -24,8 +24,12 @@
             <n-radio :value="1">是</n-radio>
           </n-radio-group>
         </n-form-item>
+        <n-form-item label="所属应用">
+          <n-input placeholder="该密码项所属的网站，APP" maxlength="250" show-count v-model:value="model.application"/>
+        </n-form-item>
+
         <n-form-item label="备注说明">
-          <n-input type="textarea" :rows="3" placeholder="该密码项的相关描述，比如密码所属的网站，APP" maxlength="5000"
+          <n-input type="textarea" :rows="3" placeholder="该密码项的相关描述" maxlength="5000"
                    show-count v-model:value="model.description"/>
         </n-form-item>
       </n-form>
