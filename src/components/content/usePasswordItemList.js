@@ -7,13 +7,19 @@ export default function () {
     const keyWord = ref()
 
     const {fetchPasswordItemList, deletePasswordItem} = UsePasswordStorage()
-    const reloadPasswordItemList = () => {
+    const reloadPasswordItemList = (config = {filterGroup: ''}) => {
         let fullPasswordItemList = fetchPasswordItemList()
+        const {filterGroup} = config
 
         const filterStr = keyWord.value
         if (typeof filterStr !== "undefined" && !!(filterStr.trim())) {
             fullPasswordItemList = fullPasswordItemList.filter(v => v.passwordName.indexOf(filterStr) > -1)
         }
+
+        if (!!filterGroup) {
+            fullPasswordItemList = fullPasswordItemList.filter(v => (v.groups || []).indexOf(filterGroup) > -1)
+        }
+
         passwordItemList.value = fullPasswordItemList
     }
 

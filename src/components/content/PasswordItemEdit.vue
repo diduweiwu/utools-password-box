@@ -29,8 +29,11 @@
         </n-form-item>
 
         <n-form-item label="备注说明">
-          <n-input type="textarea" :rows="3" placeholder="该密码项的相关描述" maxlength="5000"
+          <n-input type="textarea" :rows="2" placeholder="该密码项的相关描述" maxlength="5000"
                    show-count v-model:value="model.description"/>
+        </n-form-item>
+        <n-form-item label="所属分组">
+          <n-dynamic-tags v-model:value="model.groups"/>
         </n-form-item>
       </n-form>
       <template #footer>

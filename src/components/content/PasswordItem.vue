@@ -24,20 +24,27 @@
         </n-popover>
       </n-space>
     </template>
-    <n-space justify="space-between" align="center" class="password-item"
-             @dblclick="()=>copyContent(passwordItem['passwordContent'])">
-      <n-popover>
-        双击直接复制密码
-        <template #trigger>
-          <n-ellipsis style="max-width: 280px" v-if="isShowPlainPassword">
-            {{ passwordItem['passwordContent'] }}
-          </n-ellipsis>
-          <n-text v-else>
-            <n-icon :component="LockOutlined"/>
-            **********
-          </n-text>
-        </template>
-      </n-popover>
+    <n-space vertical justify="space-between" size="small">
+      <n-space align="center" class="password-item"
+               @dblclick="()=>copyContent(passwordItem['passwordContent'])">
+        <n-popover>
+          双击直接复制密码
+          <template #trigger>
+            <n-ellipsis style="max-width: 280px" v-if="isShowPlainPassword">
+              {{ passwordItem['passwordContent'] }}
+            </n-ellipsis>
+            <n-text v-else>
+              <n-icon :component="LockOutlined"/>
+              **********
+            </n-text>
+          </template>
+        </n-popover>
+      </n-space>
+      <template v-if="passwordItem['groups']&&passwordItem['groups'].length">
+        <n-space>
+          <n-tag size="small" type="info" v-for="group in passwordItem['groups']">{{ group }}</n-tag>
+        </n-space>
+      </template>
 
     </n-space>
     <template #suffix>

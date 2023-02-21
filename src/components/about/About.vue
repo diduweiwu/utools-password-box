@@ -9,7 +9,7 @@
             <n-list-item>双击密码项-复制密码</n-list-item>
             <n-list-item>鼠标右击加入收藏（收藏后会置顶）</n-list-item>
             <n-list-item>功能区域五个按钮功能依次是:显示密码,查看详情,加入收藏,编辑,删除</n-list-item>
-            <n-list-item>源码地址: <a href="https://github.com/diduweiwu/utools-password-box">https://github.com/diduweiwu/utools-password-box</a>
+            <n-list-item>源码地址: <a :href="sourceLink" @click="openSourceLink">{{ sourceLink }}</a>
             </n-list-item>
           </n-list>
         </template>
@@ -26,9 +26,12 @@ export default {
   name: "About",
   setup() {
     const isShow = ref(false)
+    const sourceLink = "https://github.com/diduweiwu/utools-password-box"
 
+    const openSourceLink = () => utools.shellOpenExternal(sourceLink)
     return {
       isShow,
+      openSourceLink,
       show: () => isShow.value = true,
     }
   }

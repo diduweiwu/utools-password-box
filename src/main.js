@@ -26,6 +26,8 @@ import {
     NResult,
     NSpace,
     NPopover,
+    NDynamicTags,
+    NSelect,
     NTag,
     NText,
 } from 'naive-ui'
@@ -50,6 +52,8 @@ const naive = create({
         NResult,
         NSpace,
         NPopover,
+        NDynamicTags,
+        NSelect,
         NList,
         NListItem,
         NTag,

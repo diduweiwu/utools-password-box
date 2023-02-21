@@ -14,7 +14,7 @@
 import PasswordItem from "./PasswordItem.vue";
 import UsePasswordItemList from "./usePasswordItemList.js";
 import {onMounted} from "vue";
-import {emitter} from "/src/js/eventBus.js";
+import {emitter, GROUP_FILTER_EVENT} from "/src/js/eventBus.js";
 import {passwordUpdateEvent} from "/src/components/content/usePasswordStorage.js";
 import PasswordItemEdit from "./PasswordItemEdit.vue";
 import LockPage from "../lock/LockPage.vue";
@@ -28,6 +28,7 @@ export default {
     onMounted(() => {
       reloadPasswordItemList()
       emitter.on(passwordUpdateEvent, reloadPasswordItemList)
+      emitter.on(GROUP_FILTER_EVENT, filterGroup=> reloadPasswordItemList({filterGroup}))
     })
 
     return {
