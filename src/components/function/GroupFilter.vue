@@ -1,5 +1,5 @@
 <template>
-  <n-select style="width: 150px;" @update:value="onUpdate" v-model:value="selectGroups" clearable filterable
+  <n-select style="width: 150px;" @update:value="onUpdate" :show-on-focus="false" v-model:value="selectGroups" clearable filterable
             :options="groups" placeholder="密码分组">
     <template #empty>暂无分组信息</template>
   </n-select>

@@ -32,6 +32,7 @@ export default {
     return {
       isShow,
       openSourceLink,
+      sourceLink,
       show: () => isShow.value = true,
     }
   }
