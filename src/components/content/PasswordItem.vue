@@ -2,7 +2,7 @@
   <n-list-item :key="passwordItem.id" @click.right="starPassword">
     <template #prefix>
       <n-space align="center" justify="start" style="width: 240px">
-        <n-popover placement="right">
+        <n-popover placement="top" arrow-point-to-center>
           双击直接填充密码
           <template #trigger>
             <div style="width: 50px;" @dblclick="fillPasswordToInput">

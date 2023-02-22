@@ -30,6 +30,13 @@
             {{ passwordItem['description'] }}
           </n-text>
         </n-descriptions-item>
+        <n-descriptions-item label="所属分组">
+          <template v-for="group in passwordItem['groups']">
+            <n-tag>
+              {{ group }}
+            </n-tag>
+          </template>
+        </n-descriptions-item>
       </n-descriptions>
 
       <template #footer>

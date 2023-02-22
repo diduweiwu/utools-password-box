@@ -28,6 +28,7 @@ import {
     NPopover,
     NDynamicTags,
     NSelect,
+    NInputGroup,
     NTag,
     NText,
 } from 'naive-ui'
@@ -54,6 +55,7 @@ const naive = create({
         NPopover,
         NDynamicTags,
         NSelect,
+        NInputGroup,
         NList,
         NListItem,
         NTag,

@@ -13,7 +13,7 @@ export default function () {
 
         const filterStr = keyWord.value
         if (typeof filterStr !== "undefined" && !!(filterStr.trim())) {
-            fullPasswordItemList = fullPasswordItemList.filter(v => v.passwordName.indexOf(filterStr) > -1)
+            fullPasswordItemList = fullPasswordItemList.filter(v => v.passwordName.toLocaleLowerCase().indexOf(filterStr.toLocaleLowerCase()) > -1)
         }
 
         if (!!filterGroup) {
