@@ -14,9 +14,12 @@
                    v-model:value="model.passwordUserName"/>
         </n-form-item>
         <n-form-item label="密码" path="passwordContent">
-          <n-input type="password" :resizable="false" maxlength="2048" placeholder="请输入密码内容" show-count
-                   show-password-on="click"
-                   v-model:value="model.passwordContent"/>
+          <n-input-group>
+            <n-input type="password" :resizable="false" maxlength="2048" placeholder="请输入密码内容" show-count
+                     show-password-on="click"
+                     v-model:value="model.passwordContent"/>
+            <n-button @click="()=>model.passwordContent=genPassword()">生成</n-button>
+          </n-input-group>
         </n-form-item>
         <n-form-item label="加入收藏" label-placement="left">
           <n-radio-group v-model:value="model.isStar" name="isStar" :default-value="0">
@@ -51,6 +54,8 @@ import {ref} from "vue";
 import {emitter} from "/src/js/eventBus.js";
 import UsePasswordStorage from "./usePasswordStorage.js";
 import {useMessage} from "naive-ui";
+import {genPassword} from "/src/js/usePassword.js";
+
 
 export default {
   name: "PasswordItemEdit",
@@ -97,13 +102,15 @@ export default {
       formRef,
       onClose: () => emitter.emit('onPasswordUpdate'),
       onSave,
-      show: (passwordItem) => {
-        model.value = passwordItem || {}
+      show: (passwordItem = {}) => {
+        model.value = {}
+        Object.assign(model.value, passwordItem)
         isShow.value = true
       },
       close,
       rules,
       model,
+      genPassword,
     }
   }
 }
