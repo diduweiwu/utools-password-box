@@ -1,5 +1,6 @@
 <template>
-  <n-select style="width: 150px;" @update:value="onUpdate" :show-on-focus="false" v-model:value="selectGroups" clearable filterable
+  <n-select style="width: 150px;" @update:value="onUpdate"
+            v-model:value="selectGroup" clearable filterable
             :options="groups" placeholder="分组">
     <template #empty>暂无分组信息</template>
   </n-select>
@@ -8,7 +9,7 @@
 <script>
 import {onMounted, ref} from "vue";
 import {fetchPasswordItemList, passwordUpdateEvent} from "../content/usePasswordStorage.js";
-import {emitter, GROUP_FILTER_EVENT} from "../../js/eventBus.js";
+import {emitter, GROUP_FILTER_EVENT, SUB_INPUT_UPDATE_EVENT} from "../../js/eventBus.js";
 
 export default {
   name: "GroupFilter",
@@ -26,6 +27,7 @@ export default {
       reloadGroups()
       // 密码信息更新后，需要重新加载分组信息
       emitter.on(passwordUpdateEvent, reloadGroups)
+      emitter.on(SUB_INPUT_UPDATE_EVENT, () => emitter.emit(GROUP_FILTER_EVENT, selectGroup.value))
     })
 
     const onUpdate = (value) => emitter.emit(GROUP_FILTER_EVENT, value)
@@ -33,7 +35,7 @@ export default {
     return {
       groups,
       onUpdate,
-      selectGroups: selectGroup,
+      selectGroup,
     }
   }
 }

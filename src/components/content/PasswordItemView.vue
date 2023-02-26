@@ -1,5 +1,5 @@
 <template>
-  <n-drawer v-model:show="isShow" height="80%" :close-on-esc="false">
+  <n-drawer v-model:show="isShow" height="90%" :close-on-esc="false">
     <n-drawer-content>
       <template #header>
         详情
@@ -31,11 +31,13 @@
           </n-text>
         </n-descriptions-item>
         <n-descriptions-item label="所属分组">
-          <template v-for="group in passwordItem['groups']">
-            <n-tag>
-              {{ group }}
-            </n-tag>
-          </template>
+         <n-space>
+           <template v-for="group in passwordItem['groups']">
+             <n-tag>
+               {{ group }}
+             </n-tag>
+           </template>
+         </n-space>
         </n-descriptions-item>
       </n-descriptions>
 
