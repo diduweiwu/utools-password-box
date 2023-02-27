@@ -1,5 +1,6 @@
 <template>
-  <n-drawer v-model:show="isLocked" width="100%" :close-on-esc="false" auto-focus>
+  <n-drawer v-model:show="isLocked" width="100%" :close-on-esc="false" @after-leave="afterLeave" auto-focus
+            @after-enter="afterEnter">
     <n-drawer-content>
       <n-space vertical justify="center" align="center" style="height: 80%;width: 100%;">
         <n-text>⚠ 已锁定,请输入解锁密码</n-text>
@@ -22,11 +23,16 @@ export default {
   setup() {
     const {isLocked, unlock, unlockPassword, initIsLocked} = useLockPage()
 
+    const afterEnter = () => utools.subInputBlur()
+    const afterLeave = () => utools.subInputFocus()
+
     return {
       isLocked,
       initIsLocked,
       unlock,
       unlockPassword,
+      afterEnter,
+      afterLeave,
     }
   }
 }

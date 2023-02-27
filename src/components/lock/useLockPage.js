@@ -19,6 +19,8 @@ export default function () {
         if (aesEncrypt(userUnlockPassword) === configUnlockPassword) {
             success('解锁成功')
             isLocked.value = false
+            // 解锁完成后，将焦点切换到子输入框
+            utools.subInputFocus()
         } else {
             error('解锁密码错误')
         }

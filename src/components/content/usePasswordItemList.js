@@ -30,7 +30,12 @@ export default function () {
             keyWord.value = text
             emitter.emit(SUB_INPUT_UPDATE_EVENT)
         }, "输入关键字搜索,双击序号填充密码,单击名称查看详情,双击复制密码,右击收藏～");
-        setTimeout(() => utools.subInputBlur(), 100)
+
+        if (type === 'over') {
+            utools.setSubInputValue(payload)
+            keyWord.value = text
+            emitter.emit(SUB_INPUT_UPDATE_EVENT)
+        }
     })
 
     return {

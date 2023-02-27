@@ -20,7 +20,10 @@ export default {
     const reloadGroups = () => {
       selectGroup.value = null;
       const items = fetchPasswordItemList()
-      groups.value = items.flatMap(item => item.groups || []).map(group => ({label: group, value: group}))
+      groups.value = Array.from(new Set(items.flatMap(item => item.groups || []))).map(group => ({
+        label: group,
+        value: group
+      }))
     }
 
     onMounted(() => {
