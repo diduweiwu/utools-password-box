@@ -11,12 +11,12 @@
     </n-button>
     <n-space align="center">
       <GroupFilter/>
-      <n-button :focusable="false" text round @click="()=>$refs.passwordBoxConfig.show()">
+      <n-button ghost :focusable="false" @click="()=>$refs.passwordBoxConfig.show()">
         <template #icon>
           <n-icon :component="SettingsRound"/>
         </template>
       </n-button>
-      <n-button :focusable="false" text round @click="()=>$refs.about.show()">
+      <n-button ghost :focusable="false" @click="()=>$refs.about.show()">
         <template #icon>
           <n-icon :component="InfoOutlined"/>
         </template>

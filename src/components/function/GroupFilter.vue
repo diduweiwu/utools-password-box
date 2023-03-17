@@ -1,7 +1,7 @@
 <template>
   <n-select style="width: 150px;" @update:value="onUpdate"
             v-model:value="selectGroup" clearable filterable
-            :options="groups" placeholder="分组">
+            :options="groups" placeholder="筛选分组">
     <template #empty>暂无分组信息</template>
   </n-select>
 </template>
