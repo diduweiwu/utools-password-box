@@ -14,7 +14,8 @@
     "mitt": "^3.0.0",
     "qs": "^6.11.0",
     "secure-random-password": "^0.2.3",
-    "vue": "^3.2.41"
+    "vue": "^3.2.41",
+    "vue3-keypress": "^4.0.1"
   },
   "devDependencies": {
     "@vicons/material": "^0.12.0",

@@ -17,6 +17,7 @@
 
 <script>
 import useLockPage from "./useLockPage.js";
+import {emitter, UNLOCK_SUCCESSFULLY} from "../../js/eventBus";
 
 export default {
   name: "LockPage",
@@ -24,7 +25,10 @@ export default {
     const {isLocked, unlock, unlockPassword, initIsLocked} = useLockPage()
 
     const afterEnter = () => utools.subInputBlur()
-    const afterLeave = () => utools.subInputFocus()
+    const afterLeave = () => {
+      emitter.emit(UNLOCK_SUCCESSFULLY)
+      utools.subInputFocus()
+    }
 
     return {
       isLocked,

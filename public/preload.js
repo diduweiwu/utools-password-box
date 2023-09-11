@@ -21,3 +21,14 @@ window.copyContent = (content) => {
         utools.hideMainWindow()
     }
 }
+
+window.isLocked = true
+
+/**
+ * 按下的时候,触发blur操作
+ */
+window.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown') {
+        utools.subInputBlur()
+    }
+})

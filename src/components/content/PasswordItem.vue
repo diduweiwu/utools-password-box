@@ -1,5 +1,6 @@
 <template>
-  <n-list-item :key="passwordItem.id" @click.right="starPassword">
+  <n-list-item :key="passwordItem.id" @click.right="starPassword"
+               :style="{backgroundColor:(selectedIndex===indexNum)?'rgba(255,255,255,0.09)':''}">
     <template #prefix>
       <n-space align="center" justify="start" style="width: 240px">
         <n-popover placement="top" arrow-point-to-center>
@@ -122,16 +123,18 @@ import {useMessage} from "naive-ui";
 import PasswordItemEdit from "./PasswordItemEdit.vue";
 import PasswordItemView from "./PasswordItemView.vue";
 import useCopy from "../../js/useCopy.js";
+import {useKeypress} from "vue3-keypress";
 
 export default {
   name: "PasswordItem",
   components: {PasswordItemView, PasswordItemEdit},
   props: {
-    indexNum: {type: Number, default: 1},
+    selectedIndex: {type: Number, default: -1},
+    indexNum: {type: Number, default: 0},
     passwordItem: {type: Object, default: null}
   },
   setup(props) {
-    const {passwordItem} = toRefs(props)
+    const {passwordItem, selectedIndex, indexNum} = toRefs(props)
     const {deletePasswordItem, updatePasswordItem} = UsePasswordStorage()
     const {success} = useMessage()
 
@@ -152,6 +155,32 @@ export default {
     const showDeleteConfirm = ref(false)
 
     const {copyContent} = useCopy()
+
+    useKeypress({
+      keyEvent: "keyup",
+      keyBinds: [{
+        keyCode: "enter",
+        preventDefault: true,
+        success: () => {
+          // 非锁定状态 才执行
+          if (!window.isLocked && selectedIndex.value === indexNum.value) {
+            fillPasswordToInput()
+          }
+        }
+      },
+        {
+          keyCode: "enter",
+          preventDefault: true,
+          modifiers: ['shiftKey'],
+          success: () => {
+            // 非锁定状态 才执行
+            if (!window.isLocked && selectedIndex.value === indexNum.value) {
+              copyContent(passwordItem.value.passwordContent)
+            }
+          }
+        }
+      ]
+    })
 
     return {
       isShowPlainPassword,

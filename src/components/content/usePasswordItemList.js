@@ -7,6 +7,9 @@ export default function () {
 
     const keyWord = ref()
 
+    // 当前选中的条目行号,从0开始
+    const selectedIndex = ref(-1);
+
     const {fetchPasswordItemList, deletePasswordItem} = UsePasswordStorage()
     const reloadPasswordItemList = (config = {filterGroup: ''}) => {
         let fullPasswordItemList = fetchPasswordItemList()
@@ -24,6 +27,20 @@ export default function () {
         passwordItemList.value = fullPasswordItemList
     }
 
+    /**
+     * 增加选择的序号
+     */
+    const increaseSelectedIndex = (step = 1) => {
+        selectedIndex.value = Math.min(selectedIndex.value + step, passwordItemList.value.length - 1)
+    }
+
+    /**
+     * 减少选择的序号
+     */
+    const decreaseSelectedIndex = (step = 1) => {
+        selectedIndex.value = Math.max(selectedIndex.value - step, 0)
+    }
+
     // 进入列表的时候,初始化进行筛选
     utools.onPluginEnter(({type, payload}) => {
         utools.setSubInput(({text}) => {
@@ -39,7 +56,10 @@ export default function () {
     })
 
     return {
+        selectedIndex,
         passwordItemList,
+        increaseSelectedIndex,
+        decreaseSelectedIndex,
         reloadPasswordItemList,
         deletePasswordItem,
     }
