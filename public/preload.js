@@ -22,13 +22,26 @@ window.copyContent = (content) => {
     }
 }
 
-window.isLocked = true
+/**
+ * 是否锁定
+ * @type {boolean}
+ */
+window.isPasswordItemListLocked = true
 
 /**
  * 按下的时候,触发blur操作
  */
 window.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowDown') {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
         utools.subInputBlur()
+        return
     }
+
+    /**
+     * windows ctrl+f / mac command+f 进入筛选
+     */
+    if (e.key === 'f' && (utools.isMacOS() ? e.metaKey : e.ctrlKey)) {
+        utools.subInputFocus()
+    }
+
 })

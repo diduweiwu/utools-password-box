@@ -4,6 +4,7 @@
       <n-result status="404" title="这里只是一个兴趣使然的开发者" description="生活总归需要点乐趣">
         <template #footer>
           <n-list>
+            <n-list-item>键盘上/下键可进入手动选择, 回车填充密码,shift+回车 复制密码</n-list-item>
             <n-list-item>双击序号-直接填充密码</n-list-item>
             <n-list-item>双击名称项-复制账号</n-list-item>
             <n-list-item>双击密码项-复制密码</n-list-item>

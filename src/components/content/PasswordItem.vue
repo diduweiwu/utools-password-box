@@ -1,6 +1,6 @@
 <template>
-  <n-list-item :key="passwordItem.id" @click.right="starPassword"
-               :style="{backgroundColor:(selectedIndex===indexNum)?'rgba(255,255,255,0.09)':''}">
+  <n-list-item :key="passwordItem.id" class="password-list-item" style="outline: none" @click.right="starPassword" :tabindex="0"
+               :style="{backgroundColor:(selectedIndex===indexNum)?'rgba(183,166,243,0.18)':''}">
     <template #prefix>
       <n-space align="center" justify="start" style="width: 240px">
         <n-popover placement="top" arrow-point-to-center>
@@ -163,7 +163,7 @@ export default {
         preventDefault: true,
         success: () => {
           // 非锁定状态 才执行
-          if (!window.isLocked && selectedIndex.value === indexNum.value) {
+          if (!window.isPasswordItemListLocked && selectedIndex.value === indexNum.value) {
             fillPasswordToInput()
           }
         }
@@ -174,7 +174,7 @@ export default {
           modifiers: ['shiftKey'],
           success: () => {
             // 非锁定状态 才执行
-            if (!window.isLocked && selectedIndex.value === indexNum.value) {
+            if (!window.isPasswordItemListLocked && selectedIndex.value === indexNum.value) {
               copyContent(passwordItem.value.passwordContent)
             }
           }

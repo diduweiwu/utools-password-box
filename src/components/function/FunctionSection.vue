@@ -3,7 +3,7 @@
   <PasswordBoxConfig ref="passwordBoxConfig"/>
   <About ref="about"/>
   <n-space justify="space-between" align="center" style="height: 50px;">
-    <n-button @click="()=>passwordItemEdit.show()">
+    <n-button @click="()=>passwordItemEdit.show()" :focusable="false">
       添加
       <template #icon>
         <n-icon :component="PlusRound"/>

@@ -17,7 +17,6 @@
 
 <script>
 import useLockPage from "./useLockPage.js";
-import {emitter, UNLOCK_SUCCESSFULLY} from "../../js/eventBus";
 
 export default {
   name: "LockPage",
@@ -26,8 +25,8 @@ export default {
 
     const afterEnter = () => utools.subInputBlur()
     const afterLeave = () => {
-      emitter.emit(UNLOCK_SUCCESSFULLY)
       utools.subInputFocus()
+      window.isPasswordItemListLocked = false
     }
 
     return {
